@@ -1,7 +1,6 @@
 """
 Test basic conversion functions.
 """
-
 import pytest
 
 from bh_utils.conversions import (
