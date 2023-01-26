@@ -1,6 +1,7 @@
 """
 Test template functions.
 """
+from sys import platform
 import pytest
 
 import logging
@@ -16,33 +17,45 @@ from bh_utils.template_funcs import (
 def test_template_root_path_default():
     """Test the default behaviour.
     """
-    root_path = template_root_path()
+    root_path = template_root_path().lower()
 
-    assert root_path.lower() == "f:\\bh_utils\\src\\bh_utils\\templates"
+    if (platform == "win32"):
+        assert ("\\bh_utils\\src\\bh_utils\\templates" in root_path) == True
+    else:
+        assert ("bh_utils/src/bh_utils/templates" in root_path) == True
 
 @pytest.mark.template_funcs
 def test_template_root_path_non_default():
     """Test non default behaviour.
     """
-    root_path = template_root_path(source_dir="tests")
+    root_path = template_root_path(source_dir="tests").lower()
 
-    assert root_path.lower() == "f:\\bh_utils\\tests\\bh_utils\\templates"
+    if (platform == "win32"):
+        assert ("\\bh_utils\\tests\\bh_utils\\templates" in root_path) == True
+    else:
+        assert ("bh_utils/tests/bh_utils/templates" in root_path) == True
 
 @pytest.mark.template_funcs
 def test_template_path_default():
     """Test the default behaviour.
     """
-    tmpl_path = template_path("reports")
+    tmpl_path = template_path("reports").lower()
 
-    assert tmpl_path.lower() == "f:\\bh_utils\\src\\bh_utils\\templates\\reports"
+    if (platform == "win32"):
+        assert ("\\bh_utils\\src\\bh_utils\\templates\\reports" in tmpl_path) == True
+    else:
+        assert ("bh_utils/src/bh_utils/templates/reports" in tmpl_path) == True
 
 @pytest.mark.template_funcs
 def test_template_path_non_default():
     """Test non default behaviour.
     """
-    tmpl_path = template_path("reports", source_dir="tests")
+    tmpl_path = template_path("reports", source_dir="tests").lower()
 
-    assert tmpl_path.lower() == "f:\\bh_utils\\tests\\bh_utils\\templates\\reports"
+    if (platform == "win32"):
+        assert ("\\bh_utils\\tests\\bh_utils\\templates\\reports" in tmpl_path) == True
+    else:
+        assert ("bh_utils/tests/bh_utils/templates/reports" in tmpl_path) == True
 
 @pytest.mark.template_funcs
 def test_get_template_successful():
@@ -83,7 +96,9 @@ def test_get_template_failure():
     assert result == False
     assert len(exception_msg) > 0
 
-    expected_msg = ("Template "
-        "F:\\bh_utils\\src\\bh_utils\\templates\\reports\\test-report.html cannot be found.")
+    if (platform == "win32"):
+        expected_msg = "F:\\bh_utils\\src\\bh_utils\\templates\\reports\\test-report.html cannot be found."
+    else:
+        expected_msg = "bh_utils/src/bh_utils/templates/reports/test-report.html cannot be found."
 
-    assert expected_msg == exception_msg
+    assert (expected_msg in exception_msg) == True
