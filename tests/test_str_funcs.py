@@ -5,6 +5,7 @@ import pytest
 
 from bh_utils.str_funcs import (
     extract_session_cookie,
+    camel_case,
 )
 
 @pytest.mark.str_funcs
@@ -27,3 +28,14 @@ def test_extract_session_cookie_02():
 def test_extract_session_cookie_03():
     str = "csrftoken=7c4Dfm5zLcCKs5lEHsOwgacPCfoVVLg6lgA4kWpYbbinWzBx6B8iRi4YaESzSEyl;session=6bdb90a8-38b0-4251-9d1c-08a183fc9306.nXsyZ6p1OptV7S3xsBWT4bkJcQs"
     assert extract_session_cookie(str) == "6bdb90a8-38b0-4251-9d1c-08a183fc9306.nXsyZ6p1OptV7S3xsBWT4bkJcQs"
+
+@pytest.mark.str_funcs
+def test_camel_case():
+    str = camel_case('project-id')
+    assert str == 'projectId'
+
+    str = camel_case('project id')
+    assert str == 'projectId'
+
+    str = camel_case('name')
+    assert str == 'name'
