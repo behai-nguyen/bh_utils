@@ -3,6 +3,9 @@ Some string routines.
 
 For usage examples, see ``./tests/test_str_funcs.py``.
 """
+
+from re import sub
+
 def extract_session_cookie(cookie: str) -> str:
     """
     From a string which might have multiple ``name=value`` pair strings, get the value 
@@ -24,3 +27,22 @@ def extract_session_cookie(cookie: str) -> str:
         itm_cleaned = itm.strip()
         if ("session=" in itm_cleaned): return itm_cleaned[8:]
     return '--- No Cookie ---'
+
+def camel_case(s: str) -> str:
+    """Convert a string to camelCase.
+
+    Source: https://www.w3resource.com/python-exercises/string/python-data-type-string-exercise-96.php
+	
+    Example::
+	
+    ``project-id`` converted to ``projectId``.	
+    ``name`` to ``name``.
+
+    :param str s: source string to be converted.
+
+    :return: camelCase representation of source string.
+    :rtype: str.
+    """
+
+    s = sub(r"(_|-)+", " ", s).title().replace(" ", "")
+    return ''.join([s[0].lower(), s[1:]])
