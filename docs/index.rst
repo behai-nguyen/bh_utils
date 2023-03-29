@@ -22,3 +22,4 @@ Pip installation::
    json_funcs.rst
    date_funcs.rst
    template_funcs.rst
+   password_funcs.rst
