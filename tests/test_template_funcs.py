@@ -66,9 +66,7 @@ def test_get_template_successful():
     template_loader = jinja2.FileSystemLoader(searchpath=template_path("reports", source_dir="tests"))
     template_env = jinja2.Environment(loader=template_loader)
 
-    logger = logging.getLogger("trx")
-
-    template = get_template(template_env, "test-report.html", logger)
+    template = get_template(template_env, "test-report.html")
     html = template.render()
 
     assert ("<meta name=\"author\" content=\"Van Be Hai Nguyen\">" in html) == True
@@ -83,12 +81,10 @@ def test_get_template_failure():
     template_loader = jinja2.FileSystemLoader(searchpath=template_path("reports"))
     template_env = jinja2.Environment(loader=template_loader)
 
-    logger = logging.getLogger("trx")
-
     result = True
     exception_msg = ""
     try:
-        template = get_template(template_env, "test-report.html", logger)
+        get_template(template_env, "test-report.html")
     except Exception as e:
         result = False
         exception_msg = str(e)
