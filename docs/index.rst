@@ -17,6 +17,7 @@ Pip installation::
    :maxdepth: 2
    :caption: Contents:
 
+   logger.rst
    conversions.rst
    str_funcs.rst
    json_funcs.rst
